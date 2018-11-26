@@ -23,34 +23,20 @@ public class main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         int largeurCanevas = 400, hauteurCanevas = 300;
+        int nbPoints = 50;
 
         Group root = new Group();
         Canvas canvas = new Canvas(largeurCanevas, hauteurCanevas);
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
         graphicsContext.setFill(Color.AQUAMARINE);
 
+        Enveloppe env = new Enveloppe(nbPoints,utils.CreerNuage(nbPoints,largeurCanevas,hauteurCanevas));
 
-        int nbPoints = 50;
+        Enveloppe.ConstruitEnveloppe(env);
 
-
-        Point2D[] nuage = utils.CreerNuage(nbPoints,largeurCanevas,hauteurCanevas);
-        Enveloppe env = new Enveloppe(nbPoints);
-
-        graphicsContext.setLineWidth(1);
-
-        for(int i=0;i<nbPoints;i++){
-            graphicsContext.setFill(Color.AQUAMARINE);
-            graphicsContext.fillOval(nuage[i].getX()-5, nuage[i].getY()-5, 10, 10);
-            for(int j=0;j<nbPoints;j++) {
-                if (env.aretes[i][j]) {
-                    graphicsContext.setFill(Color.BURLYWOOD);
-                    graphicsContext.fillOval(nuage[i].getX()-5, nuage[i].getY()-5, 10, 10);
-                    graphicsContext.fillOval(nuage[j].getX()-5, nuage[j].getY()-5, 10, 10);
-                    graphicsContext.strokeLine(nuage[i].getX(),nuage[i].getY(),nuage[j].getX(),nuage[j].getY());
-                }
-            }
-        }
+        utils.Affichage(graphicsContext,env);
 
         root.getChildren().add(canvas);
         primaryStage.setScene(new Scene(root));
