@@ -32,7 +32,7 @@ public class main extends Application {
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
         graphicsContext.setFill(Color.AQUAMARINE);
 
-        Enveloppe env = new Enveloppe(nbPoints,utils.CreerNuage(nbPoints,largeurCanevas,hauteurCanevas));
+        Enveloppe env = new Enveloppe(utils.CreerNuage(nbPoints,largeurCanevas,hauteurCanevas));
 
         Enveloppe.ConstruitEnveloppe(env);
 

@@ -3,57 +3,57 @@ package utils;
 import javafx.geometry.Point2D;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Enveloppe {
 
     Point2D[] nuage;
-    boolean aretes[][];
+    ArrayList<Point2D> contour;
 
 
-    public Enveloppe(int nbPoints,Point2D[] nuage) {
-        aretes = new boolean[nbPoints][nbPoints];
-        for(int i=0;i<nbPoints;i++) {
-            for (int j = 0; j < nbPoints; j++) {
-                aretes[i][j] = false;
-            }
-        }
+    public Enveloppe(Point2D[] nuage) {
+        contour = new ArrayList<Point2D>();
+
         this.nuage = nuage;
     }
 
     public static void Fusion(Enveloppe env1,Enveloppe env2,Enveloppe envFinale){
 
+        double angleActuel,anglePrecedent;
+        int indexEnv1 = Calculs.IndexDuMaxX(env1.contour),indexEnv2 = Calculs.IndexDuMinX(env2.contour);
 
-        Point2D pointdegauche = env1.nuage[env1.nuage.length-1];
-        Point2D pointdedroite = env2.nuage[0];
+        Point2D pointGauche = env1.contour.get(indexEnv1);
+        Point2D pointDroite = env2.contour.get(indexEnv2);
 
-
-
-        for(int i=0;i<env1.nuage.length;i++) {
-            for (int j = i; j < env1.nuage.length; j++) {
-                envFinale.aretes[i][j] = env1.aretes[i][j];
-            }
-        }
-        for(int i=env1.nuage.length;i<envFinale.nuage.length;i++){
-            for(int j=i;j<envFinale.nuage.length;j++) {
-                envFinale.aretes[i][j] = env2.aretes[i-env1.nuage.length][j-env1.nuage.length];
-            }
-        }
+        envFinale.contour.addAll(env1.contour);
+        envFinale.contour.addAll(env2.contour);
 
         //TODO En fait, il faut faire en sorte que envFinale soit rangée de sorte à ce que l'on puisse effectuer les "rotations"
+
+
+        anglePrecedent = Calculs.CalculAngleDansPlan(pointGauche,pointDroite);
+/*
+        do{
+            indexEnv1 = (indexEnv1 - 1) % env1.contour.length;
+            pointGauche = env1.contour.get(indexEnv1]
+            angleActuel =
+            anglePrecedent = angleActuel;
+        } while(angleActuel >= anglePrecedent);*/
+
 
     }
 
 
     public static void ConstruitEnveloppe(Enveloppe enveloppe){
 
-        enveloppe.nuage = utils.TriParXCroissant(enveloppe.nuage);
+        enveloppe.nuage = Calculs.TriParXCroissant(enveloppe.nuage);
 
         int nbPoints = enveloppe.nuage.length;
         int milieu = enveloppe.nuage.length/2;
 
-        Enveloppe sousEnveloppe1 = new Enveloppe(nbPoints,new Point2D[milieu]);;
-        Enveloppe sousEnveloppe2 = new Enveloppe(nbPoints,new Point2D[nbPoints-milieu]);
+        Enveloppe sousEnveloppe1 = new Enveloppe(new Point2D[milieu]);
+        Enveloppe sousEnveloppe2 = new Enveloppe(new Point2D[nbPoints-milieu]);
 
         if(nbPoints > 3){
 
@@ -68,17 +68,17 @@ public class Enveloppe {
         }
 
         if(nbPoints == 2){
-            enveloppe.aretes[0][1] = true;
+            enveloppe.contour.add(enveloppe.nuage[0]);
+            enveloppe.contour.add(enveloppe.nuage[1]);
             return;
         }
 
         if(nbPoints == 3){
-            enveloppe.aretes[0][1] = true;
-            enveloppe.aretes[1][2] = true;
-            enveloppe.aretes[0][2] = true;
+            enveloppe.contour.add(enveloppe.nuage[0]);
+            enveloppe.contour.add(enveloppe.nuage[1]);
+            enveloppe.contour.add(enveloppe.nuage[2]);
             return;
         }
-
          Fusion(sousEnveloppe1,sousEnveloppe2,enveloppe);
     }
 }

@@ -18,21 +18,6 @@ public class utils {
         return nuage;
     }
 
-    public static Point2D[] TriParXCroissant(Point2D[] nuage){
-        Point2D[] nuageFinal = new Point2D[nuage.length];
-        double nuageX[] = new double[nuage.length];
-
-        for(int i = 0;i < nuage.length; i++){
-            nuageX[i] = nuage[i].getX();
-        }
-        Arrays.sort(nuageX);
-
-        for(int i = 0;i< nuage.length; i++){
-            nuageFinal[i] = new Point2D(nuageX[i],nuage[i].getY());
-        }
-        return nuageFinal;
-    }
-
     public static void AfficheMatrice(boolean M[][]){
         for(int i=0;i<M.length;i++){
             for(int j=i;j<M[i].length;j++){
@@ -51,16 +36,12 @@ public class utils {
 
     public static void AfficheEnveloppe(GraphicsContext graphicsContext, Enveloppe env) {
         graphicsContext.setLineWidth(1);
-        for(int i=0;i<env.aretes.length;i++){
-            for(int j=i;j<env.aretes[i].length;j++) {
-                if (env.aretes[i][j]) {
-                    graphicsContext.strokeLine(env.nuage[i].getX(),env.nuage[i].getY(),env.nuage[j].getX(),env.nuage[j].getY());
-                    graphicsContext.setFill(Color.BURLYWOOD);
-                    graphicsContext.fillOval(env.nuage[i].getX()-3, env.nuage[i].getY()-3, 6, 6);
-                    graphicsContext.fillOval(env.nuage[j].getX()-3, env.nuage[j].getY()-3, 6, 6);
-                }
-            }
+        for(int i=0;i<env.contour.size()-1;i++){
+            graphicsContext.strokeLine(env.contour.get(i).getX(),env.contour.get(i).getY(),env.contour.get(i+1).getX(),env.contour.get(i+1).getY());
+            graphicsContext.setFill(Color.BURLYWOOD);
+            graphicsContext.fillOval(env.contour.get(i).getX()-3, env.contour.get(i).getY()-3, 6, 6);
         }
+        graphicsContext.fillOval(env.contour.get(env.contour.size()-1).getX()-3, env.contour.get(env.contour.size()-1).getY()-3, 6, 6);
     }
 
     public static void Affichage(GraphicsContext graphicsContext, Enveloppe env) {
