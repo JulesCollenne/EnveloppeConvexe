@@ -1,5 +1,3 @@
-package utils;
-
 import javafx.geometry.Point2D;
 
 import java.awt.*;
@@ -41,10 +39,14 @@ public class Calculs {
 
     public static double CalculAngleDansPlan(Point2D p1, Point2D p2){
 
-        Point2D vecteur = Vecteur(p1,p2);
+        Point2D vecteur = Vecteur(new Point2D(0,1),new Point2D(0,0));//Vecteur(p1,p2);
         Point2D vecteurI = new Point2D(1.,0.);
-
+        System.out.println(CalculAngle(vecteur,vecteurI));
         return CalculAngle(vecteur,vecteurI);
+    }
+
+    public static double ProduitVectoriel(Point2D v1,Point2D v2){
+        return v1.getX()*v2.getY() - v1.getY()*v2.getX();
     }
 
     public static int IndexDuMinX(ArrayList<Point2D> contour){

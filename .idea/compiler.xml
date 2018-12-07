@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Enveloppe" />
         <module name="EnveloppeConvexe" />
+        <module name="EnveloppeConvexe2" />
       </profile>
     </annotationProcessing>
   </component>

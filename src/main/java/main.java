@@ -1,19 +1,10 @@
-package utils;
-
-import utils.utils;
 import javafx.application.Application;
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class main extends Application {
 
@@ -25,7 +16,7 @@ public class main extends Application {
     public void start(Stage primaryStage) {
 
         int largeurCanevas = 400, hauteurCanevas = 300;
-        int nbPoints = 50;
+        int nbPoints = 4;
 
         Group root = new Group();
         Canvas canvas = new Canvas(largeurCanevas, hauteurCanevas);
