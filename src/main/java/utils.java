@@ -43,6 +43,7 @@ public class utils {
         graphicsContext.setFill(Color.BURLYWOOD);
         graphicsContext.fillOval(env.contour.get(i).getX()-3, env.contour.get(i).getY()-3, 6, 6);
         graphicsContext.fillOval(env.contour.get(env.contour.size()-1).getX()-3, env.contour.get(env.contour.size()-1).getY()-3, 6, 6);
+        graphicsContext.fillOval(env.contour.get(0).getX()-3, env.contour.get(0).getY()-3, 6, 6);
     }
 
     public static void Affichage(GraphicsContext graphicsContext, Enveloppe env) {

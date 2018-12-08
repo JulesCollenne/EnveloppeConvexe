@@ -2,64 +2,51 @@ import javafx.geometry.Point2D;
 
 import java.util.ArrayList;
 
-import static java.lang.Thread.sleep;
 
-
-public class Enveloppe {
+class Enveloppe {
 
     Point2D[] nuage;
     ArrayList<Point2D> contour;
 
 
-    public Enveloppe(Point2D[] nuage) {
-        contour = new ArrayList<Point2D>();
+    Enveloppe(Point2D[] nuage) {
+        contour = new ArrayList<>();
         this.nuage = nuage;
     }
 
-    public static int indexPointHautGauche(int indexEnv1,int indexEnv2,Enveloppe env1,Enveloppe env2,Point2D pointGauche,Point2D pointDroite){
-        double angleActuel,anglePrecedent;
-        Point2D vecteurPrecedent = new Point2D(pointGauche.getX()-pointDroite.getX(),pointGauche.getY()-pointDroite.getY());
+     private static int indexPointHautGauche(int indexEnv1, Enveloppe env1, Point2D pointDroite){
+        Point2D vecteurPrecedent;
         Point2D vecteurActuel;
+        Point2D pointGauche = env1.contour.get(indexEnv1);
 
-        indexEnv1--;
-        if(indexEnv1 < 0)
-            indexEnv1 = env1.contour.size()-1;
-        pointGauche = env1.contour.get(indexEnv1);
-        vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(),pointGauche.getY()-pointDroite.getY());
-        anglePrecedent = Calculs.CalculAngle(vecteurActuel,vecteurPrecedent);
-        vecteurPrecedent = vecteurActuel;
+         vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(), pointGauche.getY()-pointDroite.getY());
         do{
+            vecteurPrecedent = vecteurActuel;
             indexEnv1--;
             if(indexEnv1 < 0)
                 indexEnv1 = env1.contour.size()-1;
             pointGauche = env1.contour.get(indexEnv1);
-            //La base est le point de droite, donc le vecteur va de pointDroite vers pointGauche
-            vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(),pointGauche.getY()-pointDroite.getY());
-            angleActuel = Calculs.CalculAngle(vecteurActuel,vecteurPrecedent);
-        } while(angleActuel >= anglePrecedent);
+            vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(), pointGauche.getY()-pointDroite.getY());
+        } while(Calculs.ProduitVectorielGauche(vecteurPrecedent,vecteurActuel));
 
         indexEnv1 = (indexEnv1+1) % env1.contour.size();
 
         return indexEnv1;
     }
 
-    public static int indexPointHautDroite(int indexEnv1,int indexEnv2,Enveloppe env1,Enveloppe env2,Point2D pointGauche,Point2D pointDroite){
-        double angleActuel,anglePrecedent;
-        Point2D vecteurPrecedent = new Point2D(pointDroite.getX()-pointGauche.getX(),pointDroite.getY()-pointGauche.getY());
+     private static int indexPointHautDroite(int indexEnv2, Enveloppe env2, Point2D pointGauche){
+        Point2D vecteurPrecedent;
         Point2D vecteurActuel;
+        Point2D pointDroite = env2.contour.get(indexEnv2);
 
-        indexEnv2++;
-        indexEnv2 %= env2.contour.size();
-        pointDroite = env2.contour.get(indexEnv2);
-        vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(),pointDroite.getY()-pointGauche.getY());
-        anglePrecedent = Calculs.CalculAngle(vecteurActuel,vecteurPrecedent);
-        vecteurPrecedent = vecteurActuel;
+        vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(), pointDroite.getY()-pointGauche.getY());
+
         do{
+            vecteurPrecedent = vecteurActuel;
             indexEnv2 = (indexEnv2+1) % env2.contour.size();
             pointDroite = env2.contour.get(indexEnv2);
-            vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(),pointDroite.getY()-pointGauche.getY());
-            angleActuel = Calculs.CalculAngle(vecteurActuel,vecteurPrecedent);
-        } while(angleActuel >= anglePrecedent);
+            vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(), pointDroite.getY()-pointGauche.getY());
+        } while(Calculs.ProduitVectorielDroite(vecteurPrecedent,vecteurActuel));
 
         indexEnv2--;
         if(indexEnv2 < 0)
@@ -68,26 +55,21 @@ public class Enveloppe {
         return indexEnv2;
     }
 
-    public static int indexPointBasDroite(int indexEnv1,int indexEnv2,Enveloppe env1,Enveloppe env2,Point2D pointGauche,Point2D pointDroite){
-        double angleActuel,anglePrecedent;
-        Point2D vecteurPrecedent = new Point2D(pointDroite.getX()-pointGauche.getX(),pointDroite.getY()-pointGauche.getY());
+     private static int indexPointBasDroite(int indexEnv2, Enveloppe env2, Point2D pointGauche){
+        Point2D vecteurPrecedent;
         Point2D vecteurActuel;
+        Point2D pointDroite = env2.contour.get(indexEnv2);
 
-        indexEnv2--;
-        if(indexEnv2 < 0)
-            indexEnv2 = env2.contour.size()-1;
-        pointDroite = env2.contour.get(indexEnv2);
-        vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(),pointDroite.getY()-pointGauche.getY());
-        anglePrecedent = Calculs.CalculAngle(vecteurActuel,vecteurPrecedent);
-        vecteurPrecedent = vecteurActuel;
+        vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(), pointDroite.getY()-pointGauche.getY());
+
         do{
+            vecteurPrecedent = vecteurActuel;
             indexEnv2--;
             if(indexEnv2 < 0)
                 indexEnv2 = env2.contour.size()-1;
             pointDroite = env2.contour.get(indexEnv2);
-            vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(),pointDroite.getY()-pointGauche.getY());
-            angleActuel = Calculs.CalculAngle(vecteurActuel,vecteurPrecedent);
-        } while(angleActuel >= anglePrecedent);
+            vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(), pointDroite.getY()-pointGauche.getY());
+        } while(!Calculs.ProduitVectorielDroite(vecteurPrecedent,vecteurActuel));
 
         indexEnv2++;
         indexEnv2 %= env2.contour.size();
@@ -95,23 +77,19 @@ public class Enveloppe {
         return indexEnv2;
     }
 
-    public static int indexPointBasGauche(int indexEnv1,int indexEnv2,Enveloppe env1,Enveloppe env2,Point2D pointGauche,Point2D pointDroite){
-        double angleActuel,anglePrecedent;
-        Point2D vecteurPrecedent = new Point2D(pointGauche.getX()-pointDroite.getX(),pointGauche.getY()-pointDroite.getY());
+     private static int indexPointBasGauche(int indexEnv1, Enveloppe env1, Point2D pointDroite){
+        Point2D vecteurPrecedent;
         Point2D vecteurActuel;
+        Point2D pointGauche = env1.contour.get(indexEnv1);
 
-        indexEnv1 = (indexEnv1+1) % env1.contour.size();
-        pointGauche = env1.contour.get(indexEnv1);
-        vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(),pointGauche.getY()-pointDroite.getY());
-        anglePrecedent = Calculs.CalculAngle(vecteurActuel,vecteurPrecedent);
-        vecteurPrecedent = vecteurActuel;
+        vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(), pointGauche.getY()-pointDroite.getY());
+
         do{
+            vecteurPrecedent = vecteurActuel;
             indexEnv1 = (indexEnv1+1) % env1.contour.size();
             pointGauche = env1.contour.get(indexEnv1);
-            //La base est le point de droite, donc le vecteur va de pointDroite vers pointGauche
-            vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(),pointGauche.getY()-pointDroite.getY());
-            angleActuel = Calculs.CalculAngle(vecteurActuel,vecteurPrecedent);
-        } while(angleActuel >= anglePrecedent);
+            vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(), pointGauche.getY()-pointDroite.getY());
+        } while(!Calculs.ProduitVectorielGauche(vecteurPrecedent,vecteurActuel));
 
         indexEnv1--;
         if(indexEnv1 < 0)
@@ -120,30 +98,67 @@ public class Enveloppe {
         return indexEnv1;
     }
 
-    public static void Fusion(Enveloppe env1,Enveloppe env2,Enveloppe envFinale){
+    private static int[] MonterLesPoints(Enveloppe env1, Enveloppe env2, int indexG, int indexD, Point2D pointDroite){
+        int ancienIndexG,ancienIndexD;
+        indexG = indexPointHautGauche(indexG,env1,pointDroite);
+        Point2D pointGauche = env1.contour.get(indexG);
+        indexD = indexPointHautDroite(indexD,env2, pointGauche);
+        pointDroite = env2.contour.get(indexD);
+        do{
+            ancienIndexD = indexD;
+            ancienIndexG = indexG;
+            indexG = indexPointHautGauche(indexG,env1,pointDroite);
+            pointGauche = env1.contour.get(indexG);
+            indexD = indexPointHautDroite(indexD,env2, pointGauche);
+            pointDroite = env2.contour.get(indexD);
+        } while(ancienIndexD != indexD || ancienIndexG != indexG);
+        int[] duo = new int[2];
+        duo[0] = indexG;
+        duo[1] = indexD;
+        return duo;
+    }
+
+    private static int[] DescendreLesPoints(Enveloppe env1, Enveloppe env2, int indexG, int indexD, Point2D pointDroite){
+        int ancienIndexG,ancienIndexD;
+        indexG = indexPointBasGauche(indexG,env1,pointDroite);
+        Point2D pointGauche = env1.contour.get(indexG);
+        indexD = indexPointBasDroite(indexD,env2, pointGauche);
+        pointDroite = env2.contour.get(indexD);
+        do{
+            ancienIndexD = indexD;
+            ancienIndexG = indexG;
+            indexG = indexPointBasGauche(indexG,env1,pointDroite);
+            pointGauche = env1.contour.get(indexG);
+            indexD = indexPointBasDroite(indexD,env2, pointGauche);
+            pointDroite = env2.contour.get(indexD);
+        } while(ancienIndexD != indexD || ancienIndexG != indexG);
+        int[] duo = new int[2];
+        duo[0] = indexG;
+        duo[1] = indexD;
+        return duo;
+    }
+
+    static void Fusion(Enveloppe env1, Enveloppe env2, Enveloppe envFinale){
 
         int indexEnv1 = Calculs.IndexDuMaxX(env1.contour),indexEnv2 = Calculs.IndexDuMinX(env2.contour);
-        int indexPointHG,indexPointHD,indexPointBG,indexPointBD;
+        int haut[],bas[];
 
-        Point2D pointGauche = env1.contour.get(indexEnv1);
         Point2D pointDroite = env2.contour.get(indexEnv2);
 
-        indexPointHG = indexPointHautGauche(indexEnv1,indexEnv2,env1,env2,pointGauche,pointDroite);
+        haut = MonterLesPoints(env1,env2,indexEnv1,indexEnv2,pointDroite);
+        bas = DescendreLesPoints(env1,env2,indexEnv1,indexEnv2,pointDroite);
 
-        indexPointHD = indexPointHautDroite(indexEnv1,indexEnv2,env1,env2,pointGauche,pointDroite);
-
-        indexPointBD = indexPointBasDroite(indexEnv1,indexEnv2,env1,env2,pointGauche,pointDroite);
-
-        indexPointBG = indexPointBasGauche(indexEnv1,indexEnv2,env1,env2,pointGauche,pointDroite);
+        System.out.println("Haut : "+env1.contour.get(haut[0])+" "+env2.contour.get(haut[1]));
+        System.out.println("Bas : "+env1.contour.get(bas[0])+" "+env2.contour.get(bas[1]));
 
         int i;
-        for(i = indexPointBG; i != indexPointHG;i = (i + 1) % env1.contour.size()) {
+        for(i = bas[0]; i != haut[0];i = (i + 1) % env1.contour.size()) {
             envFinale.contour.add(env1.contour.get(i));
         }
         envFinale.contour.add(env1.contour.get(i));
 
-        i = indexPointHD;
-        while(i != indexPointBD){
+        i = haut[1];
+        while(i != bas[1]){
             envFinale.contour.add(env2.contour.get(i));
             i++;
             i %= env2.contour.size();
@@ -153,7 +168,7 @@ public class Enveloppe {
     }
 
 
-    public static void ConstruitEnveloppe(Enveloppe enveloppe) {
+    static void ConstruitEnveloppe(Enveloppe enveloppe) {
 
         enveloppe.nuage = Calculs.TriParXCroissant(enveloppe.nuage);
 
@@ -165,11 +180,10 @@ public class Enveloppe {
 
         if(nbPoints > 3){
 
-            for(int i=0;i<milieu;i++)
-                sousEnveloppe1.nuage[i] = enveloppe.nuage[i];
+            System.arraycopy(enveloppe.nuage, 0, sousEnveloppe1.nuage, 0, milieu);
 
-            for(int i=0;i<nbPoints-milieu;i++)
-                sousEnveloppe2.nuage[i] = enveloppe.nuage[i+milieu];
+            if (nbPoints - milieu >= 0)
+                System.arraycopy(enveloppe.nuage, milieu, sousEnveloppe2.nuage, 0, nbPoints - milieu);
 
             ConstruitEnveloppe(sousEnveloppe1);
             ConstruitEnveloppe(sousEnveloppe2);
@@ -184,9 +198,19 @@ public class Enveloppe {
 
         if(nbPoints == 3){
             enveloppe.contour.add(enveloppe.nuage[0]);
-            enveloppe.contour.add(enveloppe.nuage[1]);
-            enveloppe.contour.add(enveloppe.nuage[2]);
-            return;
+
+            Point2D v1,v2;
+            v1 = new Point2D(enveloppe.nuage[1].getX()-enveloppe.nuage[0].getX(),enveloppe.nuage[1].getY()-enveloppe.nuage[0].getY());
+            v2 = new Point2D(enveloppe.nuage[2].getX()-enveloppe.nuage[0].getX(),enveloppe.nuage[2].getY()-enveloppe.nuage[0].getY());
+
+            if(Calculs.ProduitVectorielDroite(v1,v2)){
+                enveloppe.contour.add(enveloppe.nuage[2]);
+                enveloppe.contour.add(enveloppe.nuage[1]);
+            }
+            else{
+                enveloppe.contour.add(enveloppe.nuage[1]);
+                enveloppe.contour.add(enveloppe.nuage[2]);
+            }
         }
     }
 }

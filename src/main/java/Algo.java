@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class main extends Application {
+public class Algo extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -16,7 +16,7 @@ public class main extends Application {
     public void start(Stage primaryStage) {
 
         int largeurCanevas = 400, hauteurCanevas = 300;
-        int nbPoints = 4;
+        int nbPoints = 100;
 
         Group root = new Group();
         Canvas canvas = new Canvas(largeurCanevas, hauteurCanevas);
