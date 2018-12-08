@@ -7,11 +7,13 @@ class Enveloppe {
 
     Point2D[] nuage;
     ArrayList<Point2D> contour;
+    Triangulation triang;
 
 
     Enveloppe(Point2D[] nuage) {
         contour = new ArrayList<>();
         this.nuage = nuage;
+        triang = new Triangulation();
     }
 
      private static int indexPointHautGauche(int indexEnv1, Enveloppe env1, Point2D pointDroite){
@@ -20,6 +22,7 @@ class Enveloppe {
         Point2D pointGauche = env1.contour.get(indexEnv1);
 
          vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(), pointGauche.getY()-pointDroite.getY());
+
         do{
             vecteurPrecedent = vecteurActuel;
             indexEnv1--;
@@ -27,7 +30,7 @@ class Enveloppe {
                 indexEnv1 = env1.contour.size()-1;
             pointGauche = env1.contour.get(indexEnv1);
             vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(), pointGauche.getY()-pointDroite.getY());
-        } while(Calculs.ProduitVectorielGauche(vecteurPrecedent,vecteurActuel));
+        } while(Calculs.ProduitVectorielGauche(vecteurPrecedent,vecteurActuel) && !Calculs.CasSegment(pointGauche,pointDroite));
 
         indexEnv1 = (indexEnv1+1) % env1.contour.size();
 
@@ -46,7 +49,7 @@ class Enveloppe {
             indexEnv2 = (indexEnv2+1) % env2.contour.size();
             pointDroite = env2.contour.get(indexEnv2);
             vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(), pointDroite.getY()-pointGauche.getY());
-        } while(Calculs.ProduitVectorielDroite(vecteurPrecedent,vecteurActuel));
+        } while(Calculs.ProduitVectorielDroite(vecteurPrecedent,vecteurActuel) && !Calculs.CasSegment(pointGauche,pointDroite));
 
         indexEnv2--;
         if(indexEnv2 < 0)
@@ -69,7 +72,7 @@ class Enveloppe {
                 indexEnv2 = env2.contour.size()-1;
             pointDroite = env2.contour.get(indexEnv2);
             vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(), pointDroite.getY()-pointGauche.getY());
-        } while(!Calculs.ProduitVectorielDroite(vecteurPrecedent,vecteurActuel));
+        } while(!Calculs.ProduitVectorielDroite(vecteurPrecedent,vecteurActuel) && !Calculs.CasSegment(pointGauche,pointDroite));
 
         indexEnv2++;
         indexEnv2 %= env2.contour.size();
@@ -89,7 +92,7 @@ class Enveloppe {
             indexEnv1 = (indexEnv1+1) % env1.contour.size();
             pointGauche = env1.contour.get(indexEnv1);
             vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(), pointGauche.getY()-pointDroite.getY());
-        } while(!Calculs.ProduitVectorielGauche(vecteurPrecedent,vecteurActuel));
+        } while(!Calculs.ProduitVectorielGauche(vecteurPrecedent,vecteurActuel) && !Calculs.CasSegment(pointGauche,pointDroite));
 
         indexEnv1--;
         if(indexEnv1 < 0)
@@ -146,10 +149,7 @@ class Enveloppe {
         Point2D pointDroite = env2.contour.get(indexEnv2);
 
         haut = MonterLesPoints(env1,env2,indexEnv1,indexEnv2,pointDroite);
-        bas = DescendreLesPoints(env1,env2,indexEnv1,indexEnv2,pointDroite);
-
-        System.out.println("Haut : "+env1.contour.get(haut[0])+" "+env2.contour.get(haut[1]));
-        System.out.println("Bas : "+env1.contour.get(bas[0])+" "+env2.contour.get(bas[1]));
+        bas = DescendreLesPoints(env1,env2,indexEnv1,indexEnv2,pointDroite); //TODO ICI BOUCLE INFINIE : Quand deux poitn ont le meme x
 
         int i;
         for(i = bas[0]; i != haut[0];i = (i + 1) % env1.contour.size()) {
@@ -188,6 +188,11 @@ class Enveloppe {
             ConstruitEnveloppe(sousEnveloppe1);
             ConstruitEnveloppe(sousEnveloppe2);
             Fusion(sousEnveloppe1,sousEnveloppe2,enveloppe);
+        }
+
+        if(nbPoints == 1){
+            enveloppe.contour.add(enveloppe.nuage[0]);
+            return;
         }
 
         if(nbPoints == 2){

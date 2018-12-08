@@ -4,9 +4,9 @@ import javafx.scene.paint.Color;
 
 import java.util.Random;
 
-public class utils {
+class utils {
 
-    public static Point2D[] CreerNuage(int nbPoints,int largeurCanevas,int hauteurCanevas){
+    static Point2D[] CreerNuage(int nbPoints, int largeurCanevas, int hauteurCanevas){
         Point2D[] nuage = new Point2D[nbPoints];
         Random rand = new Random();
         for(int i=0;i<nbPoints;i++){
@@ -15,23 +15,14 @@ public class utils {
         return nuage;
     }
 
-    public static void AfficheMatrice(boolean M[][]){
-        for(int i=0;i<M.length;i++){
-            for(int j=i;j<M[i].length;j++){
-                System.out.print(M[i][j]);
-            }
-            System.out.println();
-        }
-    }
-
-    public static void AfficheNuage(GraphicsContext graphicsContext, Point2D[] nuage) {
-        for(int i=0;i<nuage.length;i++){
+    private static void AfficheNuage(GraphicsContext graphicsContext, Point2D[] nuage) {
+        for (Point2D aNuage : nuage) {
             graphicsContext.setFill(Color.AQUAMARINE);
-            graphicsContext.fillOval(nuage[i].getX()-3, nuage[i].getY()-3, 6, 6);
+            graphicsContext.fillOval(aNuage.getX() - 3, aNuage.getY() - 3, 6, 6);
         }
     }
 
-    public static void AfficheEnveloppe(GraphicsContext graphicsContext, Enveloppe env) {
+    private static void AfficheEnveloppe(GraphicsContext graphicsContext, Enveloppe env) {
         graphicsContext.setLineWidth(1);
         for(int i=0;i<env.contour.size()-1;i++){
             graphicsContext.strokeLine(env.contour.get(i).getX(),env.contour.get(i).getY(),env.contour.get(i+1).getX(),env.contour.get(i+1).getY());
@@ -46,9 +37,17 @@ public class utils {
         graphicsContext.fillOval(env.contour.get(0).getX()-3, env.contour.get(0).getY()-3, 6, 6);
     }
 
-    public static void Affichage(GraphicsContext graphicsContext, Enveloppe env) {
+    private static void AfficheTriangulation(GraphicsContext graphicsContext, Enveloppe env){
+        graphicsContext.setFill(Color.PAPAYAWHIP);
+        for(int i=0;i<env.triang.aretes.size();i+=2){
+            graphicsContext.strokeLine(env.contour.get(env.triang.aretes.get(i)).getX(),env.contour.get(env.triang.aretes.get(i)).getY(),env.nuage[env.triang.aretes.get(i)].getX(),env.nuage[env.triang.aretes.get(i)].getY());
+        }
+    }
+
+    static void Affichage(GraphicsContext graphicsContext, Enveloppe env) {
         graphicsContext.clearRect(0, 0, 400, 300);
         utils.AfficheNuage(graphicsContext,env.nuage);
         utils.AfficheEnveloppe(graphicsContext,env);
+        utils.AfficheTriangulation(graphicsContext,env);
     }
 }

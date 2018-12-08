@@ -51,4 +51,9 @@ class Calculs {
     static boolean ProduitVectorielGauche(Point2D v1, Point2D v2) {
         return !(v1.getX() * v2.getY() - v1.getY() * v2.getX() > 0);
     }
+
+    public static boolean CasSegment(Point2D pointGauche, Point2D pointDroite) {
+        //return pointGauche.getX() == pointDroite.getX();
+        return false;
+    }
 }

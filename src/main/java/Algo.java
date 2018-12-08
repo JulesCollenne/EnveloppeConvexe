@@ -16,7 +16,7 @@ public class Algo extends Application {
     public void start(Stage primaryStage) {
 
         int largeurCanevas = 400, hauteurCanevas = 300;
-        int nbPoints = 100;
+        int nbPoints = 20;
 
         Group root = new Group();
         Canvas canvas = new Canvas(largeurCanevas, hauteurCanevas);
@@ -26,6 +26,7 @@ public class Algo extends Application {
         Enveloppe env = new Enveloppe(utils.CreerNuage(nbPoints,largeurCanevas,hauteurCanevas));
 
         Enveloppe.ConstruitEnveloppe(env);
+        env.triang.Triangule(env);
 
         utils.Affichage(graphicsContext,env);
 

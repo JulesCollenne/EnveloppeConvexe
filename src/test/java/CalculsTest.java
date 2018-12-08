@@ -6,22 +6,12 @@ import java.util.Random;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for simple App.
  */
 public class CalculsTest
 {
-    /**
-     * Rigorous Test :-)
-     */
-    @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
-    }
-
     @Test
     public void ProduitVectorielDroiteTest(){
         boolean angle;
@@ -61,32 +51,6 @@ public class CalculsTest
         indexMin = Calculs.IndexDuMinX(nuage);
         assertThat(indexMin,equalTo(11));
     }
-/*
-    @Test
-    public void indexPointTest(){
-        Point2D[] nuage = new Point2D[0];
-        Enveloppe env = new Enveloppe(nuage);
-        Point2D pointDroite = new Point2D(5,5);
-        Point2D pointGauche = new Point2D(-1,-1);
-        int index[] = new int[2];
-
-        env.contour.add(new Point2D(0,0));
-        env.contour.add(new Point2D(1,6));
-        env.contour.add(new Point2D(3,4));
-        env.contour.add(new Point2D(3,1));
-
-        index[0] = Enveloppe.indexPointHautGauche(2,env,pointDroite);
-        assertThat(index, equalTo(1));
-
-        index[1] = Enveloppe.indexPointBasGauche(2,env,pointDroite);
-        assertThat(index, equalTo(3));
-
-        index[0] = Enveloppe.indexPointHautDroite(0,env,pointGauche);
-        assertThat(index, equalTo(1));
-
-        index = Enveloppe.indexPointBasDroite(0,env,pointGauche);
-        assertThat(index, equalTo(0));
-    }*/
 
     @Test
     public void FusionTest(){
