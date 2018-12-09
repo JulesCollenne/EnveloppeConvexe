@@ -39,8 +39,10 @@ class utils {
 
     private static void AfficheTriangulation(GraphicsContext graphicsContext, Enveloppe env){
         graphicsContext.setFill(Color.PAPAYAWHIP);
-        for(int i=0;i<env.triang.aretes.size();i+=2){
-            graphicsContext.strokeLine(env.contour.get(env.triang.aretes.get(i)).getX(),env.contour.get(env.triang.aretes.get(i)).getY(),env.nuage[env.triang.aretes.get(i)].getX(),env.nuage[env.triang.aretes.get(i)].getY());
+        for(int i = 0; i<env.triangulation.triangles.size(); i+=2){
+            graphicsContext.strokeLine(env.triangulation.triangles.get(i).points[0].getX(),env.triangulation.triangles.get(i).points[0].getY(),env.triangulation.triangles.get(i).points[1].getX(),env.triangulation.triangles.get(i).points[1].getY());
+            graphicsContext.strokeLine(env.triangulation.triangles.get(i).points[1].getX(),env.triangulation.triangles.get(i).points[1].getY(),env.triangulation.triangles.get(i).points[2].getX(),env.triangulation.triangles.get(i).points[2].getY());
+            graphicsContext.strokeLine(env.triangulation.triangles.get(i).points[2].getX(),env.triangulation.triangles.get(i).points[2].getY(),env.triangulation.triangles.get(i).points[0].getX(),env.triangulation.triangles.get(i).points[0].getY());
         }
     }
 
@@ -49,5 +51,13 @@ class utils {
         utils.AfficheNuage(graphicsContext,env.nuage);
         utils.AfficheEnveloppe(graphicsContext,env);
         utils.AfficheTriangulation(graphicsContext,env);
+    }
+
+    public static int indiceDuNuage(Enveloppe enveloppe,Point2D point2D) {
+        for(int i = 0;i < enveloppe.nuage.length;i++){
+            if(enveloppe.nuage[i].getX() == point2D.getX() && enveloppe.nuage[i].getY() == point2D.getY())
+                return i;
+        }
+        return -1;
     }
 }

@@ -26,7 +26,7 @@ public class Algo extends Application {
         Enveloppe env = new Enveloppe(utils.CreerNuage(nbPoints,largeurCanevas,hauteurCanevas));
 
         Enveloppe.ConstruitEnveloppe(env);
-        env.triang.Triangule(env);
+        env.triangulation.Triangule(env);
 
         utils.Affichage(graphicsContext,env);
 
