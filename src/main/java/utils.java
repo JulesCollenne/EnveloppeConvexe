@@ -49,8 +49,8 @@ class utils {
     static void Affichage(GraphicsContext graphicsContext, Enveloppe env) {
         graphicsContext.clearRect(0, 0, 400, 300);
         utils.AfficheNuage(graphicsContext,env.nuage);
-        utils.AfficheEnveloppe(graphicsContext,env);
         utils.AfficheTriangulation(graphicsContext,env);
+        utils.AfficheEnveloppe(graphicsContext,env);
     }
 
     static int indiceDuNuage(Enveloppe enveloppe, Point2D point2D) {

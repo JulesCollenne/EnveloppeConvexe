@@ -16,7 +16,7 @@ public class Algo extends Application {
     public void start(Stage primaryStage) {
 
         int largeurCanevas = 700, hauteurCanevas = 600;
-        int nbPoints = 5;
+        int nbPoints = 6;
 
         Group root = new Group();
         Canvas canvas = new Canvas(largeurCanevas, hauteurCanevas);
