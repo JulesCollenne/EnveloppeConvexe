@@ -7,12 +7,12 @@ class Enveloppe {
 
     Point2D[] nuage;
     ArrayList<Point2D> contour;
-    Triangulation triangulation = new Triangulation(this);
-
+    Triangulation triangulation;
 
     Enveloppe(Point2D[] nuage) {
         contour = new ArrayList<>();
         this.nuage = nuage;
+        triangulation = new Triangulation(this);
     }
 
      private static int indexPointHautGauche(int indexEnv1, Enveloppe env1, Point2D pointDroite){
