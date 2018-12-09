@@ -7,13 +7,12 @@ class Enveloppe {
 
     Point2D[] nuage;
     ArrayList<Point2D> contour;
-    Triangulation triangulation;
+    Triangulation triangulation = new Triangulation(this);
 
 
     Enveloppe(Point2D[] nuage) {
         contour = new ArrayList<>();
         this.nuage = nuage;
-        triangulation = new Triangulation(this);
     }
 
      private static int indexPointHautGauche(int indexEnv1, Enveloppe env1, Point2D pointDroite){
@@ -30,7 +29,7 @@ class Enveloppe {
                 indexEnv1 = env1.contour.size()-1;
             pointGauche = env1.contour.get(indexEnv1);
             vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(), pointGauche.getY()-pointDroite.getY());
-        } while(Calculs.ProduitVectorielGauche(vecteurPrecedent,vecteurActuel) && !Calculs.CasSegment(pointGauche,pointDroite));
+        } while(Calculs.ProduitVectorielGauche(vecteurPrecedent,vecteurActuel));
 
         indexEnv1 = (indexEnv1+1) % env1.contour.size();
 
@@ -49,7 +48,7 @@ class Enveloppe {
             indexEnv2 = (indexEnv2+1) % env2.contour.size();
             pointDroite = env2.contour.get(indexEnv2);
             vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(), pointDroite.getY()-pointGauche.getY());
-        } while(Calculs.ProduitVectorielDroite(vecteurPrecedent,vecteurActuel) && !Calculs.CasSegment(pointGauche,pointDroite));
+        } while(Calculs.ProduitVectorielDroite(vecteurPrecedent,vecteurActuel));
 
         indexEnv2--;
         if(indexEnv2 < 0)
@@ -72,7 +71,7 @@ class Enveloppe {
                 indexEnv2 = env2.contour.size()-1;
             pointDroite = env2.contour.get(indexEnv2);
             vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(), pointDroite.getY()-pointGauche.getY());
-        } while(!Calculs.ProduitVectorielDroite(vecteurPrecedent,vecteurActuel) && !Calculs.CasSegment(pointGauche,pointDroite));
+        } while(!Calculs.ProduitVectorielDroite(vecteurPrecedent,vecteurActuel));
 
         indexEnv2++;
         indexEnv2 %= env2.contour.size();
@@ -92,7 +91,7 @@ class Enveloppe {
             indexEnv1 = (indexEnv1+1) % env1.contour.size();
             pointGauche = env1.contour.get(indexEnv1);
             vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(), pointGauche.getY()-pointDroite.getY());
-        } while(!Calculs.ProduitVectorielGauche(vecteurPrecedent,vecteurActuel) && !Calculs.CasSegment(pointGauche,pointDroite));
+        } while(!Calculs.ProduitVectorielGauche(vecteurPrecedent,vecteurActuel));
 
         indexEnv1--;
         if(indexEnv1 < 0)
