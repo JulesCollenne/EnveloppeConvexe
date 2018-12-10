@@ -45,14 +45,10 @@ class Calculs {
     }
 
     static boolean ProduitVectorielDroite(Point2D v1, Point2D v2){
-        if(v1.getX() == v2.getX())
-            return v2.getY() > v1.getY();
         return v1.getX() * v2.getY() - v1.getY() * v2.getX() > 0;
     }
 
     static boolean ProduitVectorielGauche(Point2D v1, Point2D v2) {
-        if(v1.getX() == v2.getX())
-            return v2.getY() > v1.getY();
         return !(v1.getX() * v2.getY() - v1.getY() * v2.getX() > 0);
     }
 
@@ -63,5 +59,15 @@ class Calculs {
                 return false;
         }
         return true;
+    }
+
+    static boolean DeuxPointsIdentiques(Point2D[] nuage,int taille){
+        for(int i = 0;i < taille; i++){
+            for(int j = i+1;j <= taille;j++){
+                if(nuage[i].getX() == nuage[j].getX() && nuage[i].getY() == nuage[j].getY())
+                    return true;
+            }
+        }
+        return false;
     }
 }

@@ -2,19 +2,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.Random;
-
-class utils {
-
-    static Point2D[] CreerNuage(int nbPoints, int largeurCanevas, int hauteurCanevas){
-        Point2D[] nuage = new Point2D[nbPoints];
-        Random rand = new Random();
-        for(int i=0;i<nbPoints;i++){
-            nuage[i] = new Point2D(rand.nextInt(largeurCanevas-20)+10,rand.nextInt(hauteurCanevas-20)+10);
-        }
-        return nuage;
-    }
-
+class Affichage {
     private static void AfficheNuage(GraphicsContext graphicsContext, Point2D[] nuage) {
         for (Point2D aNuage : nuage) {
             graphicsContext.setFill(Color.AQUAMARINE);
@@ -46,11 +34,11 @@ class utils {
         }
     }
 
-    static void Affichage(GraphicsContext graphicsContext, Enveloppe env) {
+    static void Afficher(GraphicsContext graphicsContext, Enveloppe env) {
         graphicsContext.clearRect(0, 0, 400, 300);
-        utils.AfficheNuage(graphicsContext,env.nuage);
-        utils.AfficheTriangulation(graphicsContext,env);
-        utils.AfficheEnveloppe(graphicsContext,env);
+        Affichage.AfficheNuage(graphicsContext,env.nuage);
+        Affichage.AfficheTriangulation(graphicsContext,env);
+        Affichage.AfficheEnveloppe(graphicsContext,env);
     }
 
     static int indiceDuNuage(Enveloppe enveloppe, Point2D point2D) {

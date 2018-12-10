@@ -23,12 +23,12 @@ public class Algo extends Application {
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
         graphicsContext.setFill(Color.AQUAMARINE);
 
-        Enveloppe env = new Enveloppe(utils.CreerNuage(nbPoints,largeurCanevas,hauteurCanevas));
+        Enveloppe env = new Enveloppe(Enveloppe.CreerNuage(nbPoints,largeurCanevas,hauteurCanevas));
 
         Enveloppe.ConstruitEnveloppe(env);
         env.triangulation.Triangule(env);
 
-        utils.Affichage(graphicsContext,env);
+        Affichage.Afficher(graphicsContext,env);
 
         root.getChildren().add(canvas);
         primaryStage.setScene(new Scene(root));
