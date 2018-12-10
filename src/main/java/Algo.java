@@ -28,6 +28,8 @@ public class Algo extends Application {
         Enveloppe.ConstruitEnveloppe(env);
         env.triangulation.Triangule(env);
 
+        //Triangulation.TrianguleDelaunay(env);
+
         Affichage.Afficher(graphicsContext,env);
 
         root.getChildren().add(canvas);

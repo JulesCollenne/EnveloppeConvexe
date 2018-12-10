@@ -70,4 +70,40 @@ class Calculs {
         }
         return false;
     }
+
+    public static double minX(Point2D[] nuage) {
+        double min = nuage[0].getX();
+        for(int i = 1;i < nuage.length; i++){
+            if(min > nuage[i].getX())
+                min = nuage[i].getX();
+        }
+        return min;
+    }
+
+    public static double maxX(Point2D[] nuage) {
+        double max = nuage[0].getX();
+        for(int i = 1;i < nuage.length; i++){
+            if(max < nuage[i].getX())
+                max = nuage[i].getX();
+        }
+        return max;
+    }
+
+    public static double minY(Point2D[] nuage) {
+        double min = nuage[0].getX();
+        for(int i = 1;i < nuage.length; i++){
+            if(min > nuage[i].getY())
+                min = nuage[i].getY();
+        }
+        return min;
+    }
+
+    public static double maxY(Point2D[] nuage) {
+        double max = nuage[0].getY();
+        for(int i = 1;i < nuage.length; i++){
+            if(max < nuage[i].getY())
+                max = nuage[i].getY();
+        }
+        return max;
+    }
 }

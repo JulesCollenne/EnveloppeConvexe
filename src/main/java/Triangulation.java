@@ -1,3 +1,4 @@
+import javafx.geometry.Point2D;
 import java.util.ArrayList;
 
 public class Triangulation {
@@ -36,6 +37,42 @@ public class Triangulation {
 
     public static void TrianguleDelaunay(Enveloppe env){
         System.out.println("Salut ! On ne m'a pas encore implémenté... Mais ça ne risque pas de tarder ! :)");
+
+        double minX,maxX,minY,maxY;
+
+        minX = Calculs.minX(env.nuage);
+        maxX = Calculs.maxX(env.nuage);
+
+        minY = Calculs.minY(env.nuage);
+        maxY = Calculs.maxY(env.nuage);
+
+        Point2D A = new Point2D(minX,minY);
+        Point2D B = new Point2D(maxX,minY);
+        Point2D C = new Point2D(minX,maxY);
+
+        Cercle cercle;
+        ArrayList<Triangle> mauvaisTriangles = new ArrayList<>();
+
+        for(Point2D point : env.nuage){
+            for(Triangle triangle : env.triangulation.triangles){
+                cercle = triangle.CercleCirconscrit();
+                if(cercle.Contient(point)){
+                    mauvaisTriangles.add(triangle);
+                }
+            }
+
+            for(Triangle triangle : mauvaisTriangles){
+                //En enleve le triangle de la triangulation
+            }
+
+            for(Triangle triangle : mauvaisTriangles){
+                for(Point2D sommet : triangle.points){
+                    //TODO
+                }
+            }
+
+        }
+
     }
 
 

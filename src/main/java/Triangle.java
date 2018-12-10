@@ -9,7 +9,7 @@ class Triangle {
         points[2] = p3;
     }
 
-    boolean Contient(Point2D point){
+    public boolean Contient(Point2D point){
         Point2D a = points[0],b =points[1],c = points[2];
 
         double contientX = point.getX()-a.getX();
@@ -22,5 +22,8 @@ class Triangle {
         return (c.getX() - b.getX()) * (point.getY() - b.getY()) - (c.getY() - b.getY()) * (point.getX() - b.getX()) > 0 == s_ab;
     }
 
+    public Cercle CercleCirconscrit(){ //TODO
+        return new Cercle();
+    }
 }
 
