@@ -20,9 +20,22 @@ class Enveloppe {
         Point2D vecteurActuel;
         Point2D pointGauche = env1.contour.get(indexEnv1);
 
+        double max;
+
          vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(), pointGauche.getY()-pointDroite.getY());
 
         do{
+            if(Calculs.CasDuSegment(env1.contour)){
+                indexEnv1 = 0;
+                max = env1.contour.get(0).getY();
+                for(int i =1;i<env1.contour.size();i++){
+                    if(max < env1.contour.get(i).getY()){
+                        max = env1.contour.get(i).getY();
+                        indexEnv1 = i;
+                    }
+                }
+               return indexEnv1;
+            }
             vecteurPrecedent = vecteurActuel;
             indexEnv1--;
             if(indexEnv1 < 0)
@@ -41,9 +54,22 @@ class Enveloppe {
         Point2D vecteurActuel;
         Point2D pointDroite = env2.contour.get(indexEnv2);
 
+        double max;
+
         vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(), pointDroite.getY()-pointGauche.getY());
 
         do{
+            if(Calculs.CasDuSegment(env2.contour)){
+                indexEnv2 = 0;
+                max = env2.contour.get(0).getY();
+                for(int i =1;i<env2.contour.size();i++){
+                    if(max < env2.contour.get(i).getY()){
+                        max = env2.contour.get(i).getY();
+                        indexEnv2 = i;
+                    }
+                }
+                return indexEnv2;
+            }
             vecteurPrecedent = vecteurActuel;
             indexEnv2 = (indexEnv2+1) % env2.contour.size();
             pointDroite = env2.contour.get(indexEnv2);
@@ -62,9 +88,22 @@ class Enveloppe {
         Point2D vecteurActuel;
         Point2D pointDroite = env2.contour.get(indexEnv2);
 
+        double min;
+
         vecteurActuel = new Point2D(pointDroite.getX()-pointGauche.getX(), pointDroite.getY()-pointGauche.getY());
 
         do{
+            if(Calculs.CasDuSegment(env2.contour)){
+                indexEnv2 = 0;
+                min = env2.contour.get(0).getY();
+                for(int i =1;i<env2.contour.size();i++){
+                    if(min > env2.contour.get(i).getY()){
+                        min = env2.contour.get(i).getY();
+                        indexEnv2 = i;
+                    }
+                }
+                return indexEnv2;
+            }
             vecteurPrecedent = vecteurActuel;
             indexEnv2--;
             if(indexEnv2 < 0)
@@ -84,9 +123,22 @@ class Enveloppe {
         Point2D vecteurActuel;
         Point2D pointGauche = env1.contour.get(indexEnv1);
 
+        double min;
+
         vecteurActuel = new Point2D(pointGauche.getX()-pointDroite.getX(), pointGauche.getY()-pointDroite.getY());
 
         do{
+            if(Calculs.CasDuSegment(env1.contour)){
+                indexEnv1 = 0;
+                min = env1.contour.get(0).getY();
+                for(int i =1;i<env1.contour.size();i++){
+                    if(min > env1.contour.get(i).getY()){
+                        min = env1.contour.get(i).getY();
+                        indexEnv1 = i;
+                    }
+                }
+                return indexEnv1;
+            }
             vecteurPrecedent = vecteurActuel;
             indexEnv1 = (indexEnv1+1) % env1.contour.size();
             pointGauche = env1.contour.get(indexEnv1);
@@ -148,7 +200,7 @@ class Enveloppe {
         Point2D pointDroite = env2.contour.get(indexEnv2);
 
         haut = MonterLesPoints(env1,env2,indexEnv1,indexEnv2,pointDroite);
-        bas = DescendreLesPoints(env1,env2,indexEnv1,indexEnv2,pointDroite); //TODO ICI BOUCLE INFINIE : Quand deux poitn ont le meme x
+        bas = DescendreLesPoints(env1,env2,indexEnv1,indexEnv2,pointDroite);
 
         int i;
         for(i = bas[0]; i != haut[0];i = (i + 1) % env1.contour.size()) {

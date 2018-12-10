@@ -16,8 +16,8 @@ public class CalculsTest
     public void ProduitVectorielDroiteTest(){
         boolean angle;
 
-        Point2D v1 = new Point2D(1,-1);
-        Point2D v2 = new Point2D(1,-0.5);
+        Point2D v1 = new Point2D(0,1);
+        Point2D v2 = new Point2D(0,50);
         angle = Calculs.ProduitVectorielDroite(v1,v2);
         assertThat(angle,equalTo(true));
     }
@@ -26,8 +26,8 @@ public class CalculsTest
     public void ProduitVectorielGaucheTest(){
         boolean angle;
 
-        Point2D v1 = new Point2D(-1,-1);
-        Point2D v2 = new Point2D(-1,-1.5);
+        Point2D v1 = new Point2D(0,1);
+        Point2D v2 = new Point2D(0,-2);
         angle = Calculs.ProduitVectorielGauche(v1,v2);
         assertThat(angle,equalTo(false));
     }
