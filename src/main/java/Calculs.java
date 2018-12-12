@@ -44,12 +44,21 @@ class Calculs {
         return indexMax;
     }
 
-    static boolean ProduitVectorielDroite(Point2D v1, Point2D v2){
-        return v1.getX() * v2.getY() - v1.getY() * v2.getX() > 0;
+    static boolean Alignes(Point2D v1,Point2D v2){
+        double diviseur;
+        if(v1.getX() != 0 && v1.getY() != 0 && v2.getX() != 0 && v2.getY() != 0) {
+            diviseur = v1.getX() / v2.getX();
+            return diviseur == (v1.getY() / v2.getY());
+        }
+        if((v1.getX() == 0 && v1.getY() == 0) || (v2.getX() == 0 && v2.getY() == 0))
+            return true;
+        return (v1.getX() == 0 && v2.getX() == 0) || (v1.getY() == 0 && v2.getY() == 0);
     }
 
-    static boolean ProduitVectorielGauche(Point2D v1, Point2D v2) {
-        return !(v1.getX() * v2.getY() - v1.getY() * v2.getX() > 0);
+    static boolean ProduitVectoriel(Point2D v1, Point2D v2){
+        if(v1.getX() == 0 && v2.getX() == 0)
+            return v2.getY() > v1.getY();
+        return Math.abs(v1.getX()) * v2.getY() - v1.getY() * Math.abs(v2.getX()) > 0;
     }
 
     static boolean CasDuSegment(ArrayList<Point2D> contour) {
@@ -71,7 +80,7 @@ class Calculs {
         return false;
     }
 
-    public static double minX(Point2D[] nuage) {
+    static double minX(Point2D[] nuage) {
         double min = nuage[0].getX();
         for(int i = 1;i < nuage.length; i++){
             if(min > nuage[i].getX())
@@ -80,7 +89,7 @@ class Calculs {
         return min;
     }
 
-    public static double maxX(Point2D[] nuage) {
+    static double maxX(Point2D[] nuage) {
         double max = nuage[0].getX();
         for(int i = 1;i < nuage.length; i++){
             if(max < nuage[i].getX())
@@ -89,7 +98,7 @@ class Calculs {
         return max;
     }
 
-    public static double minY(Point2D[] nuage) {
+    static double minY(Point2D[] nuage) {
         double min = nuage[0].getX();
         for(int i = 1;i < nuage.length; i++){
             if(min > nuage[i].getY())
@@ -98,7 +107,7 @@ class Calculs {
         return min;
     }
 
-    public static double maxY(Point2D[] nuage) {
+    static double maxY(Point2D[] nuage) {
         double max = nuage[0].getY();
         for(int i = 1;i < nuage.length; i++){
             if(max < nuage[i].getY())

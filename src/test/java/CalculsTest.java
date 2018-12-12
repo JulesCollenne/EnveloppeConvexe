@@ -13,25 +13,49 @@ import static org.junit.Assert.assertThat;
 public class CalculsTest
 {
     @Test
-    public void ProduitVectorielDroiteTest(){
+    public void ProduitVectorielTest(){
         boolean angle;
 
-        Point2D v1 = new Point2D(0,1);
-        Point2D v2 = new Point2D(0,50);
-        angle = Calculs.ProduitVectorielDroite(v1,v2);
+        Point2D v1 = new Point2D(-1,2);
+        Point2D v2 = new Point2D(-1,3);
+        angle = Calculs.ProduitVectoriel(v1,v2);
+        assertThat(angle,equalTo(true));
+
+        v1 = new Point2D(0,1);
+        v2 = new Point2D(-1,1);
+        angle = Calculs.ProduitVectoriel(v1,v2);
+        assertThat(angle,equalTo(false));
+
+        v1 = new Point2D(0,1);
+        v2 = new Point2D(0,2);
+        angle = Calculs.ProduitVectoriel(v1,v2);
+        assertThat(angle,equalTo(true));
+
+        v1 = new Point2D(1,2);
+        v2 = new Point2D(1,3);
+        angle = Calculs.ProduitVectoriel(v1,v2);
+        assertThat(angle,equalTo(true));
+
+        v1 = new Point2D(0,1);
+        v2 = new Point2D(1,1);
+        angle = Calculs.ProduitVectoriel(v1,v2);
+        assertThat(angle,equalTo(false));
+
+        v1 = new Point2D(0,1);
+        v2 = new Point2D(0,2);
+        angle = Calculs.ProduitVectoriel(v1,v2);
         assertThat(angle,equalTo(true));
     }
 
     @Test
-    public void ProduitVectorielGaucheTest(){
+    public void AligneTest(){
         boolean angle;
 
-        Point2D v1 = new Point2D(0,1);
+        Point2D v1 = new Point2D(0,-1);
         Point2D v2 = new Point2D(0,-2);
-        angle = Calculs.ProduitVectorielGauche(v1,v2);
-        assertThat(angle,equalTo(false));
+        angle = Calculs.Alignes(v1,v2);
+        assertThat(angle,equalTo(true));
     }
-
 
     @Test
     public void IndexXTest(){

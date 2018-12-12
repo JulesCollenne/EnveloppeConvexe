@@ -9,6 +9,7 @@
         <module name="Enveloppe" />
         <module name="EnveloppeConvexe" />
         <module name="EnveloppeConvexe2" />
+        <module name="EnveloppeConvexe5" />
       </profile>
     </annotationProcessing>
   </component>
